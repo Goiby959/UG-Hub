@@ -176,7 +176,7 @@ async function uploadFanArt(file) {
 async function uploadImage(file) {
   try {
       method: "POST",
-      headers: {
+      headers; {
         apikey: SUPABASE_ANON_KEY,
         Authorization: "Bearer " + (currentSession ? currentSession.access_token : SUPABASE_ANON_KEY),
         "Content-Type": file.type || "application/octet-stream",
