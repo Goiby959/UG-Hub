@@ -1,10 +1,16 @@
 // api/create-checkout.js
 // Vercel serverless function — creates a Stripe Checkout session for
 // a one-time "buy me a coffee" donation of any amount between $1-$1000.
+//
+// Written as an ES module (import/export) because this project's
+// package.json has "type": "module", which makes Node treat all .js
+// files as ES modules rather than CommonJS.
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+import Stripe from "stripe";
 
-module.exports = async (req, res) => {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -52,4 +58,4 @@ module.exports = async (req, res) => {
     console.error("Stripe error:", err.message);
     return res.status(500).json({ error: "Failed to create checkout session." });
   }
-};
+}
